@@ -7,7 +7,7 @@ const promesa1 = (user, pagina, cantidad_repos) => new Promise((resolve, reject)
         .then((respuesta) => {
             if (respuesta[0].message == 'Not Found') {
                 alert(`no se encuentró el usuario "${user}"`);
-                reject("error");
+                reject("error no se encuentró el usuario");
             } else {
                 document.getElementById("col_datos_personales").innerHTML = `
                     <p><h3>Datos de Usuario</h3></p>
@@ -54,14 +54,12 @@ let agregar = (event) => {
 };
 btn.addEventListener("click", agregar);
 
-//​https://api.github.com/users/{user}​
-//https://api.github.com/users/{user}/repos?page={pagina}&per_page={cantidad_repos}​​
 
 async function request(url) {
     try {
         const results = await fetch(url);
         const response = await results.json();
-        console.log(url)
+
         return response;
 
     } catch (error) {
@@ -78,6 +76,7 @@ function getUser(user) {
 
     } catch (error) {
         alert("no se pudo encontrar el usuario");
+        throw Error("no se pudo encontrar el usuario");
     }
 }
 function getRepo(user, pagina, cantidad_repos) {
@@ -87,6 +86,7 @@ function getRepo(user, pagina, cantidad_repos) {
         return request(url);
     } catch (error) {
         alert("no se pudo cargar las repo");
+        throw Error("no se pudo encontrar el usuario");
     }
 }
 
